@@ -115,11 +115,10 @@ Run all scripts including AWS integration. Deploy QuickSight dashboard from `qui
 ## Business Impact
 
 Industry research and Snowflake customer outcomes:
-- **Vietnam renewable energy sector growing rapidly** — [GSO Vietnam](https://www.gso.gov.vn/)
-- **AI improves outcomes 15-30%** — [McKinsey](https://www.mckinsey.com/)
-- **Vietnam FDI strong in this sector** — [MPI](https://www.mpi.gov.vn/)
-- **Real-time analytics reduces response 60-80%** — [Gartner](https://www.gartner.com/)
-
+- **Vietnam launched its carbon credit exchange pilot in 2025 — targeting $2B market by 2030** — [Vietnam Carbon Market](https://moit.gov.vn/en/news/energy-policy/vietnam-carbon-market-roadmap.html)
+- **Article 6 of Paris Agreement enables Vietnam to sell ITMO credits — estimated 57M tCO2e reduction potential by 2030** — [UNFCCC NDC Registry](https://unfccc.int/NDCREG)
+- **Voluntary carbon credits from renewable projects in Vietnam trade at $5-15/tCO2e — verification is key bottleneck** — [Verra Registry](https://registry.verra.org/)
+- **S&P Global Commodity Insights manages carbon credit pricing and analytics on Snowflake** — [Snowflake Financial Services](https://www.snowflake.com/en/data-cloud/financial-services/)
 
 ## Key Demo Numbers
 

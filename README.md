@@ -118,7 +118,7 @@ Industry research and Snowflake customer outcomes:
 - **Vietnam launched its carbon credit exchange pilot in 2025 — targeting $2B market by 2030** — [Vietnam Carbon Market](https://moit.gov.vn/en/news/energy-policy/vietnam-carbon-market-roadmap.html)
 - **Article 6 of Paris Agreement enables Vietnam to sell ITMO credits — estimated 57M tCO2e reduction potential by 2030** — [UNFCCC NDC Registry](https://unfccc.int/NDCREG)
 - **Voluntary carbon credits from renewable projects in Vietnam trade at $5-15/tCO2e — verification is key bottleneck** — [Verra Registry](https://registry.verra.org/)
-- **S&P Global Commodity Insights manages carbon credit pricing and analytics on Snowflake** — [Snowflake Financial Services](https://www.snowflake.com/en/data-cloud/financial-services/)
+- **Uniper** (Snowflake customer): built a real-time energy trading and grid analytics platform on Snowflake managing 40GW of generation capacity -- [snowflake.com/customers/uniper](https://www.snowflake.com/en/customers/all-customers/case-study/uniper/)
 
 ## Key Demo Numbers
 

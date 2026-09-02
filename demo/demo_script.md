@@ -1,105 +1,78 @@
-# Demo Script: Carbon Credit Trading
-## ~4-Minute Recorded Walkthrough
-**Format**: Screen recording with voiceover
-**Target**: Customer meeting / booth loop / social share
-**Narrative**: "Snowflake delivers carbon credit trading intelligence for Vietnamese renewable energy - Dynamic Tables maintain real-time dashboards, ML.FORECAST projects key metrics, and Cortex AI generates recommendations"
-**Demo Mode**: Open app with `?demo=true` for presenter notes
+# Carbon Credit Trading
 
----
+**Vietnam - Renewable Energy**
+Use case: Carbon Credit Trading
 
-## Two Personas
+> Carbon Credit Trading for Vietnam - ML.FORECAST and Dynamic Tables power real-time carbon credit trading intelligence for renewable energy in Ho Chi Minh City.
 
-| Persona | Role | Tool | What they care about |
-|---|---|---|---|
-| **Vo Minh Quan** | Head of Carbon Trading | React App (SPCS) | Carbon Credit Trading strategy, KPI tracking, operational decisions |
-| **Tran Thi Ngoc** | Carbon Market Analyst | Amazon QuickSight | Carbon Credit Trading operations, analysis, reporting |
+## Why Snowflake
 
----
+Snowflake delivers carbon credit trading intelligence for Vietnamese renewable energy - Dynamic Tables maintain real-time dashboards, ML.FORECAST projects key metrics, and Cortex AI generates recommendations
 
-## What's Built
+- **ML.FORECAST for carbon credit trading** - Only demo for Vietnamese renewable energy
+- **ML.ANOMALY_DETECTION early warning** - Detects deviations before impact
+- **AI recommendations** - Cortex AI actionable guidance
+- **Vietnamese context** - Local names, VND economics
 
-| Layer | Component | Detail |
+## What is deployed
+
+| | |
+|---|---|
+| Database | `VIETNAM_RENEWABLE_CARBON` |
+| Service | `VIETNAM_RENEWABLE_CARBON_APP` |
+| Compute pool | `SEA_DEMOS_VIETNAM_POOL` |
+| Dimension table | `RAW.DOCUMENTS` (20 rows) |
+| Fact table | `RAW.METRICS` (250,000 rows, 90 days) |
+| Curated layer | `CURATED.PERFORMANCE_SUMMARY`, `CURATED.TREND_ANALYSIS`, `CURATED.KPI_SUMMARY` |
+| Currency | VND (₫) |
+
+Regions in play: Ho Chi Minh City, Hanoi, Binh Duong, Dong Nai, Can Tho
+Segments: Mangrove Restoration, Rice Methane, Cookstove, Reforestation
+
+Dynamic tables are created suspended and refreshed on demand:
+
+```bash
+./refresh_demo_data.sh VIETNAM_RENEWABLE_CARBON
+```
+
+## KPI cards
+
+Every card below is served live from `CURATED.KPI_SUMMARY`. The app keeps the
+original literal as a fallback, so it still renders if Snowflake is unreachable.
+
+| Card | Value | Backed by |
 |---|---|---|
-| **RAW** | 5 tables | OPERATIONS (100000), METRICS (500000), ASSETS (5000), EVENTS (200000), DOCUMENTS (100) |
-| **CURATED** | 4 Dynamic Tables | PERFORMANCE_DASHBOARD, TREND_ANALYTICS, FORECAST_INPUT, OPERATIONAL_RISK |
-| **ML** | ML.FORECAST + ML.ANOMALY_DETECTION | Forecasting + anomaly detection |
-| **AI** | COMPLETE, SUMMARIZE, AI_CLASSIFY | Classification + extraction |
-| **Search** | Cortex Search | 100 documents indexed |
-| **Agent** | CARBON_TRADING_AGENT | Semantic View + Search tools |
+| Carbon Credits Issued | `4.2M tCO2e` | total across Documents |
+| Avg Price | `₫84K/tCO2e` | average per event |
+| Projects Active | `42` | total across Documents |
+| Revenue (YTD) | `₫354B` | total across Documents |
+| VCM Price Trend | `↑ 24%` | average per event |
+| Compliance Demand | `+42%` | average per event |
+| Retirement Rate | `67%` | average per event |
 
 
----
+## Demo flow
 
-## The Story
+1. Overview
+2. Analytics
+3. AI Intelligence
+4. Ask AI
+5. Architecture
 
-Vietnam renewable energy faces increasing complexity in carbon credit trading. Decision-makers in Ho Chi Minh City need real-time intelligence and ML-powered recommendations.
+## Talking points
 
----
+- **100K operations** - tracked in Ho Chi Minh City
+- **500K metrics** - time-series data points
+- **5K assets** - monitored
+- **100 docs** - searchable
 
-## Script
+## Business impact
 
-### [0:00–0:45] OVERVIEW
-
-**Show**: Overview tab
-
-> "Comprehensive carbon credit trading monitoring in Ho Chi Minh City."
-
-**Action**: Primary KPI dashboard
-
-### [0:45–1:30] ANALYTICS
-
-**Show**: Analytics tab
-
-> "Detailed trend analysis across parameters."
-
-**Action**: Trend charts
-
-### [1:30–2:15] AI INTELLIGENCE
-
-**Show**: AI Intelligence tab
-
-> "Cortex AI generates actionable recommendations."
-
-**Action**: AI recommendations
-
-### [2:15–3:00] ASK AI
-
-**Show**: Ask AI tab
-
-> "Vo Minh Quan asks questions in natural language."
-
-**Action**: Type question
-
-### [3:00–3:45] ARCHITECTURE
-
-**Show**: Architecture tab
-
-> "Six Snowflake + six AWS services."
-
-**Action**: Architecture diagram
-
+- Vietnam renewable energy sector growing rapidly (GSO Vietnam)
+- AI improves outcomes 15-30% (McKinsey)
+- Vietnam FDI strong in this sector (MPI)
+- Real-time analytics reduces response 60-80% (Gartner)
 
 ---
-
-## Key Demo Differentiators
-
-1. **ML.FORECAST for carbon credit trading** — Only demo for Vietnamese renewable energy
-2. **ML.ANOMALY_DETECTION early warning** — Detects deviations before impact
-3. **AI recommendations** — Cortex AI actionable guidance
-4. **Vietnamese context** — Local names, VND economics
-
-
----
-
-## Demo Prep Checklist
-
-### Data Verification
-- [ ] `SELECT COUNT(*) FROM CARBON_TRADING.RAW.OPERATIONS` → 100000
-- [ ] `SELECT COUNT(*) FROM CARBON_TRADING.RAW.METRICS` → 500000
-
-### ML Model Verification
-- [ ] `SELECT COUNT(*) FROM CARBON_TRADING.ML.CARBON_TRADING_FORECAST_RESULTS` → >0
-
-### AI/Agent Verification
-- [ ] `SELECT COUNT(*) FROM CARBON_TRADING.AI.EVENT_CLASSIFICATION` → >0
-
+Generated from `generator/demo_specs/aws-vietnam-renewable-carbon.json`. Do not hand-edit: run
+`python3 generator/gen_repo_docs.py aws-vietnam-renewable-carbon` instead.

@@ -21,8 +21,8 @@ Snowflake delivers carbon credit trading intelligence for Vietnamese renewable e
 | Database | `VIETNAM_RENEWABLE_CARBON` |
 | Service | `VIETNAM_RENEWABLE_CARBON_APP` |
 | Compute pool | `SEA_DEMOS_VIETNAM_POOL` |
-| Dimension table | `RAW.DOCUMENTS` (20 rows) |
-| Fact table | `RAW.METRICS` (250,000 rows, 90 days) |
+| Dimension table | `RAW.CARBON_PROJECTS` (20 rows) |
+| Fact table | `RAW.CREDIT_ISSUANCES` (250,000 rows, 90 days) |
 | Curated layer | `CURATED.PERFORMANCE_SUMMARY`, `CURATED.TREND_ANALYSIS`, `CURATED.KPI_SUMMARY` |
 | Currency | VND (₫) |
 
@@ -42,10 +42,10 @@ original literal as a fallback, so it still renders if Snowflake is unreachable.
 
 | Card | Value | Backed by |
 |---|---|---|
-| Carbon Credits Issued | `4.2M tCO2e` | total across Documents |
+| Carbon Credits Issued | `4.2M tCO2e` | total across Carbon Projects |
 | Avg Price | `₫84K/tCO2e` | average per event |
-| Projects Active | `42` | total across Documents |
-| Revenue (YTD) | `₫354B` | total across Documents |
+| Projects Active | `42` | total across Carbon Projects |
+| Revenue (YTD) | `₫354B` | total across Carbon Projects |
 | VCM Price Trend | `↑ 24%` | average per event |
 | Compliance Demand | `+42%` | average per event |
 | Retirement Rate | `67%` | average per event |

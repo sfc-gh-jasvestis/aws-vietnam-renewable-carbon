@@ -32,15 +32,22 @@ export default function HomePage() {
       .catch(() => {});
   }, []);
 
+
+  // KPI values come from /api/data, which reads CURATED.KPI_SUMMARY. The literal
+  // stays as a fallback so the card still renders if the API is unavailable.
+  const kpiVal = (title: string, fallback: string): string =>
+    (data?.kpiCards as { title: string; value: string }[] | undefined)
+      ?.find((k) => k.title === title)?.value ?? fallback;
+
   const title = narrative?.title || 'SEA AWS Demo';
 
   const executiveCockpit = (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <KPICard title="Carbon Credits Issued" value="4.2M tCO2e" status="neutral" />
-        <KPICard title="Avg Price" value="₫84K/tCO2e" status="neutral" />
-        <KPICard title="Projects Active" value="42" status="neutral" />
-        <KPICard title="Revenue (YTD)" value="₫354B" status="neutral" />
+        <KPICard title="Carbon Credits Issued" value={kpiVal('Carbon Credits Issued', '4.2M tCO2e')} status="neutral" />
+        <KPICard title="Avg Price" value={kpiVal('Avg Price', '₫84K/tCO2e')} status="neutral" />
+        <KPICard title="Projects Active" value={kpiVal('Projects Active', '42')} status="neutral" />
+        <KPICard title="Revenue (YTD)" value={kpiVal('Revenue (YTD)', '₫354B')} status="neutral" />
       </div>
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <div className="lg:col-span-1">
@@ -87,9 +94,9 @@ export default function HomePage() {
   const domainTab1 = (
     <div className="space-y-6">
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <KPICard title="VCM Price Trend" value="↑ 24%" />
-        <KPICard title="Compliance Demand" value="+42%" />
-        <KPICard title="Retirement Rate" value="67%" />
+        <KPICard title="VCM Price Trend" value={kpiVal('VCM Price Trend', '↑ 24%')} />
+        <KPICard title="Compliance Demand" value={kpiVal('Compliance Demand', '+42%')} />
+        <KPICard title="Retirement Rate" value={kpiVal('Retirement Rate', '67%')} />
       </div>
       <Chart
         data={data?.detail || [{ x: 'Mon', y: 24 }, { x: 'Tue', y: 28 }, { x: 'Wed', y: 22 }, { x: 'Thu', y: 31 }, { x: 'Fri', y: 26 }, { x: 'Sat', y: 19 }, { x: 'Sun', y: 23 }]}

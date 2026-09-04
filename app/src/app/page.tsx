@@ -53,6 +53,7 @@ export default function HomePage() {
         <div className="lg:col-span-1">
           <GeoMap
             country="vietnam"
+            labels={{ entity: 'Projects', event: 'Credit Issuances', alert: 'Verification Gaps' }}
             regions={data?.regions}
             markers={[{"label": "Ho Chi Minh City", "value": "Carbon trading HQ", "color": "blue", "size": "lg"}, {"label": "Can Tho", "value": "Forestry credits", "color": "green", "size": "md"}, {"label": "Da Nang", "value": "Cookstove projects", "color": "green", "size": "md"}, {"label": "Gia Lai", "value": "Wind credits", "color": "green", "size": "sm"}]}
             routes={[]}
@@ -83,8 +84,13 @@ export default function HomePage() {
         columns={[
           { key: 'id', header: '#' },
           { key: 'name', header: 'Project' },
+          { key: 'region', header: 'Region' },
           { key: 'status', header: 'Verification' },
-          { key: 'value', header: 'Credits (K tCO2e)' },
+          { key: 'm1', header: 'Credits (K tCO2e)' },
+          { key: 'm2', header: 'Vcm Price Trend' },
+          { key: 'm3', header: 'Compliance Demand' },
+          { key: 'events', header: 'Credit Issuances' },
+          { key: 'alerts', header: 'Verification Gaps' },
         ]}
         data={data?.entities || []}
         title="Carbon Credit Portfolio"

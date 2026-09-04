@@ -53,6 +53,7 @@ export default function HomePage() {
         <div className="lg:col-span-1">
           <GeoMap
             country="vietnam"
+            regions={data?.regions}
             markers={[{"label": "Ho Chi Minh City", "value": "Carbon trading HQ", "color": "blue", "size": "lg"}, {"label": "Can Tho", "value": "Forestry credits", "color": "green", "size": "md"}, {"label": "Da Nang", "value": "Cookstove projects", "color": "green", "size": "md"}, {"label": "Gia Lai", "value": "Wind credits", "color": "green", "size": "sm"}]}
             routes={[]}
             title="Geographic Overview"
@@ -69,7 +70,7 @@ export default function HomePage() {
           title="Carbon Credit Issuance (Monthly)"
         />
         <Chart
-          data={data?.categories || [{ category: 'North', count: 82 }, { category: 'Central', count: 74 }, { category: 'South', count: 91 }, { category: 'Highland', count: 68 }, { category: 'Coastal', count: 77 }]}
+          data={data?.categoryMetric || [{ category: 'North', count: 82 }, { category: 'Central', count: 74 }, { category: 'South', count: 91 }, { category: 'Highland', count: 68 }, { category: 'Coastal', count: 77 }]}
           type="bar"
           xKey="category"
           yKeys={[{ key: 'count', name: '₫B' }]}

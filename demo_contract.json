@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "repo": "aws-vietnam-renewable-carbon",
+  "operation": "on-demand",
+  "data_classification": "synthetic demonstration only",
+  "currency": "USD",
+  "grains": {
+    "RAW.PLANTS": "one row per renewable power plant",
+    "RAW.PLANT_DAILY": "one row per plant per day (90 days)",
+    "RAW.DEFECT_SURVEY": "one row per plant (inspection survey defect snapshot)",
+    "CURATED.PERFORMANCE_SUMMARY": "one row per plant",
+    "CURATED.TREND_ANALYSIS": "one row per day",
+    "CURATED.OUTAGE_CAUSES": "one row per root cause",
+    "CURATED.KPI_SUMMARY": "one row per KPI",
+    "ML.OUTAGE_RISK_SCORES": "one row per plant (latest day)"
+  },
+  "metrics": {
+    "Meter Data Valid": "100 * SUM(INTERVALS_VALID) / SUM(METER_INTERVALS) (15-minute intervals passing the internal data-quality check)",
+    "Generation Outages": "SUM(OUTAGE_COUNT)",
+    "Total Generation": "SUM(GENERATION_MWH) / 1000 (GWh)",
+    "Estimated Avoided Emissions": "SUM(AVOIDED_TCO2E) / 1000 (kt CO2e; generation x internal demo emission factor, an estimate and not a carbon credit)",
+    "Plant Availability": "100 * SUM(OPERATING_HOURS) / SUM(PLANNED_HOURS)",
+    "Plants Monitored": "COUNT(RAW.PLANTS)",
+    "Survey Defects Closed": "100 * SUM(LEAST(DEFECTS_CLOSED, DEFECTS_FOUND)) / SUM(DEFECTS_FOUND)",
+    "Community Grievances": "SUM(GRIEVANCES)"
+  },
+  "chart_bindings": {
+    "daily_meter_data_valid": [
+      "CURATED.TREND_ANALYSIS.METRIC_DATE",
+      "METER_VALID_PCT"
+    ],
+    "invalid_intervals_by_cause": [
+      "CURATED.OUTAGE_CAUSES.ROOT_CAUSE",
+      "INTERVALS_INVALID"
+    ],
+    "inspection_vs_meter_data": [
+      "CURATED.PERFORMANCE_SUMMARY.INSPECTION_COMPLETION_PCT",
+      "METER_VALID_PCT"
+    ],
+    "quicksight_outage_risk": [
+      "ENTITY_ID",
+      "MAX(OUTAGE_PROB_7D)"
+    ]
+  },
+  "freshness": "MAX(EVENT_DATE) is an observation watermark; requestedAt is not freshness",
+  "required_capabilities": {
+    "core_pipeline": "Curated KPIs reconcile to a RAW recomputation (run_core.py checks this on every build)",
+    "outage_risk_model": "Snowflake ML CLASSIFICATION of P(forced generation outage in next 7 days) per plant, evaluated on an out-of-time holdout",
+    "forecast_and_anomaly": "14-day portfolio-wide estimated avoided CO2e FORECAST; power-conversion equipment temperature ANOMALY_DETECTION (train 75 days, detect last 15)",
+    "search": "Cortex Search SEARCH.OUTAGE_SOP_SEARCH over synthetic outage-response SOPs (one per plant type and cause)",
+    "semantic_analytics": "Semantic view APP.RENEWABLE_ANALYTICS and Cortex Agent APP.RENEWABLE_AGENT using analyst + search tools",
+    "grounded_ai": "Agent answers return generated SQL and SOP citations; the action memo uses only KPI, outage, cause and risk rows",
+    "quicksight": "DIRECT_QUERY dashboard (plants with observations, daily meter data valid, outages by plant, outage risk, IoT message count) through a read-only Snowflake service user",
+    "quicksight_q": "Amazon Q topic over the curated datasets for natural-language questions",
+    "aws_ingestion": "IoT Core rule -> S3 -> Snowpipe AUTO_INGEST into RAW.LIVE_TELEMETRY",
+    "notifications": "APP.LIVE_ALARM_ALERT logs new ALARM readings to APP.ALERT_LOG and emails via SYSTEM$SEND_EMAIL; alert and tasks suspended between demos",
+    "orchestration": "Task graph APP.TASK_REFRESH_CURATED -> APP.TASK_RESCORE_RISK run on demand (EXECUTE TASK)",
+    "app_deployment": "SPCS service APP.VN_RENEWABLE_CARBON_APP; routes /api/data, /api/ask, /api/agent"
+  },
+  "builds": {
+    "snowflake": {
+      "database": "VIETNAM_RENEWABLE_CARBON_SNOWFLAKE",
+      "app_setting": "DEMO_PLATFORM=snowflake",
+      "live_telemetry": "APP.SIMULATE_TELEMETRY(n)",
+      "memo": "Cortex AI_COMPLETE (claude-sonnet-4-5)"
+    },
+    "aws": {
+      "database": "VIETNAM_RENEWABLE_CARBON_AWS",
+      "app_setting": "DEMO_PLATFORM=aws",
+      "live_telemetry": "AWS IoT Core -> S3 -> Snowpipe",
+      "memo": "Amazon Bedrock Claude Sonnet 4.5 via APP.BEDROCK_GENERATE",
+      "capabilities": "see required_capabilities"
+    }
+  }
+}
